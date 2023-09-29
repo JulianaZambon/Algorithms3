@@ -17,7 +17,7 @@ arvore *inicializaArvore();
 
 nodo *inicializaNodo(int valor);
 
-void insereNodo(arvore *AVL, nodo *novo);
+void insereNodo(arvore *avl, nodo *novo);
 
 int buscaNodo();
 
