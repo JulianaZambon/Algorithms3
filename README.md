@@ -1,5 +1,5 @@
 # Algorithms3
-Projects developed in the Algorithms and Data Structures 3 course.
+Project developed in the Algorithms and Data Structures 3 course.
 
 ### First Practical Assignment
 AVL Tree Implementation
