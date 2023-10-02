@@ -1,9 +1,7 @@
-# Algorithms3
-Project developed in the Algorithms and Data Structures 3 course.
+# Algoritmos e Estrututa de Dados III
 
-### First Practical Assignment
-AVL Tree Implementation
+### Primeiro Trabalho Prático
+Implementação da Árvore AVL
+O objetivo do trabalho é a implementação das rotinas de manipulação de uma árvore AVL. O trabalho deve ter uma biblioteca e uma aplicação.
 
-The objective of the project is the implementation of routines for manipulating an AVL tree. The project should include a library and an application.
-
-Authors: Juliana Zambon and Millena Suiani Costa.
+Equipe: Juliana Zambon and Millena Suiani Costa.
