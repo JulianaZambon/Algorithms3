@@ -2,4 +2,4 @@
 
 ### Primeiro Trabalho Prático
 Implementação da Árvore AVL.
-Equipe: Juliana Zambon and Millena Suiani Costa.
+Equipe: Juliana Zambon e Millena Suiani Costa.
