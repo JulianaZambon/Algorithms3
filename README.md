@@ -36,36 +36,34 @@ typedef struct nodo {
 A biblioteca desenvolvida para o trabalho foi a avl-tree.h, que define as structs mencionadas anteriormente.
 Também estão definidas as seguintes funções:
 <br>
-- `arvore *inicializaArvore();`<br>
-        Inicializa uma árvore vazia.
+- `arvore *inicializaArvore();`
+  - Inicializa uma árvore vazia.
    
-- `nodo *inicializaNodo(int valor);`<br>
-        Inicializa um nodo vazio.
+- `nodo *inicializaNodo(int valor);`
+  - Inicializa um nodo vazio.
   
-- `void verificaBalancoArvore(arvore *avl);` <br>
-        Verifica se a árvore está balanceada e chama a função rotacionaArvore
+- `void verificaBalancoArvore(arvore *avl);` 
+  - Verifica se a árvore está balanceada e chama a função rotacionaArvore
 caso seja necessário rotacioná-la para balanço.
 
-- `void rotacionaArvoreEsquerda(arvore *avl);`<br>
-        É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
+- `void rotacionaArvoreEsquerda(arvore *avl);`
+  - É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
 desbalanceada e precise de rotações à esquerda para ser balanceada.
 
-- `void rotacionaArvoreDireita(arvore *avl);`<br>
-        É chamada pela função verificaBalancoArvore caso a árvore AVL esteja
+- `void rotacionaArvoreDireita(arvore *avl);`
+  - É chamada pela função verificaBalancoArvore caso a árvore AVL esteja
 desbalanceada e precise de rotações à direita para ser balanceada.
 
-- `int buscaNodo(arvore *avl, int chave);`<br>
-        Verifica se um nodo está, ou não, presente na árvore. Caso esteja,
+- `int buscaNodo(arvore *avl, int chave);`
+  - Verifica se um nodo está, ou não, presente na árvore. Caso esteja,
 retorna 1, caso não esteja retorna 0.
 
-- `arvore *insereNodo(arvore *avl, nodo *novo);`<br>
-        Insere um nodo específico na árvore.
-
+- `arvore *insereNodo(arvore *avl, nodo *novo);`
+  - Insere um nodo específico na árvore.
   
-  
-- `arvore *removeNodo(arvore *avl, int chave);`<br>
-        Verifica se um nodo está, ou não, presente em 
+- `arvore *removeNodo(arvore *avl, int chave);`
+  - Verifica se um nodo está, ou não, presente em 
 uma árvore. Caso esteja, o remove.
 
-- `void imprimeArvore(arvore *avl);` <br>
-        Imprime recursivamente a estrutura de uma árvore.
+- `void imprimeArvore(arvore *avl);` 
+  - Imprime recursivamente a estrutura de uma árvore.
