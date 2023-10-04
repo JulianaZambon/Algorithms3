@@ -2,8 +2,9 @@
 
 ## Trabalho Prático 1: Implementação de Árvore AVL
 Este trabalho prático foi desenvolvido para a disciplina CI1057 - Algoritmos e Estruturas de Dados 3 do Departamento de Informática da UFPR. <br>
-O objetivo é implementar as rotinas de manipulação de uma árvore AVL. <br>
-Equipe: <br>
+O objetivo é implementar as rotinas de manipulação de uma árvore AVL.
+
+Equipe: 
 - Juliana Zambon, GRR20224168 <br>
 - Millena Suiani Costa, GRR2022 <br>
 
