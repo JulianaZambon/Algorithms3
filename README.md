@@ -31,35 +31,26 @@ typedef struct nodo {
 A biblioteca desenvolvida para o trabalho foi a avl-tree.h, que define as structs mencionadas anteriormente.
 Também estão definidas as seguintes funções:
 <br>
-<br>
-`arvore *inicializaArvore();`<br>
-        Inicializa uma árvore vazia.
-<br>
-`nodo *inicializaNodo(int valor);`<br>
+- `arvore *inicializaArvore();`<br>
+        Inicializa uma árvore vazia. 
+- `nodo *inicializaNodo(int valor);`<br>
         Inicializa um nodo vazio.
-<br>
-`void verificaBalancoArvore(arvore *avl);` <br>
+- `void verificaBalancoArvore(arvore *avl);` <br>
         Verifica se a árvore está balanceada e chama a função rotacionaArvore
-caso seja necessário rotacioná-la para balanço.
-<br>
-`void rotacionaArvoreEsquerda(arvore *avl);`<br>
+caso seja necessário rotacioná-la para balanço. <br>
+- `void rotacionaArvoreEsquerda(arvore *avl);`<br>
         É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
-desbalanceada e precise de rotações à esquerda para ser balanceada.
-<br>
-`void rotacionaArvoreDireita(arvore *avl);`<br>
+desbalanceada e precise de rotações à esquerda para ser balanceada. <br>
+- `void rotacionaArvoreDireita(arvore *avl);`<br>
         É chamada pela função verificaBalancoArvore caso a árvore AVL esteja
-desbalanceada e precise de rotações à direita para ser balanceada.
-<br>
-`int buscaNodo(arvore *avl, int chave);`<br>
+desbalanceada e precise de rotações à direita para ser balanceada. <br>
+- `int buscaNodo(arvore *avl, int chave);`<br>
         Verifica se um nodo está, ou não, presente na árvore. Caso esteja,
-retorna 1, caso não esteja retorna 0.
-<br>
-`arvore *insereNodo(arvore *avl, nodo *novo);`<br>
-        Insere um nodo específico na árvore.
-<br>
-`arvore *removeNodo(arvore *avl, int chave);`<br>
+retorna 1, caso não esteja retorna 0. <br>
+- `arvore *insereNodo(arvore *avl, nodo *novo);`<br>
+        Insere um nodo específico na árvore. <br>
+- `arvore *removeNodo(arvore *avl, int chave);`<br>
         Verifica se um nodo está, ou não, presente em 
-uma árvore. Caso esteja, o remove.
-<br>
-`void imprimeArvore(arvore *avl);`
+uma árvore. Caso esteja, o remove. <br>
+- `void imprimeArvore(arvore *avl);` <br>
         Imprime recursivamente a estrutura de uma árvore.
