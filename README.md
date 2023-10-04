@@ -7,10 +7,12 @@ Equipe: <br>
 - Juliana Zambon, GRR20224168 <br>
 - Millena Suiani Costa, GRR2022 <br>
 
-### Estruturas de Dados 
+### Estruturas de Dados da Árvore AVL
 A implementação da árvore AVL utilizou as seguintes estruturas definidas na biblioteca avl-tree.h <br>
 
-- Struct Árvore AVL: Contém um ponteiro para um nó da árvore, no caso a raiz, e contém a quantia de nodos dela.
+#### Struct Árvore AVL
+  
+  Contém um ponteiro para um nó da árvore, no caso a raiz, e contém a quantia de nodos dela.
   
 ```c
 typedef struct arvore {
@@ -19,7 +21,9 @@ typedef struct arvore {
 } arvore;
 ```
 
-- Struct Nodos da Árvore: contém três ponteiros para nós, sendo eles o pai, o filho esquerdo e o filho direito. Além de
+#### Struct Nodos da Árvore
+  
+  Contém três ponteiros para nós, sendo eles o pai, o filho esquerdo e o filho direito. Além de
 uma chave de busca e a altura.
   
 ```c
