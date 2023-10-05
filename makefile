@@ -1,24 +1,16 @@
 CFLAGS = -Wall -Wextra -g
+CC = gcc
 
-all: myavl
+all: busca
 
-myavl: myavl.o lib_avl.o
-	gcc -o myavl myavl.o lib_avl.o
+busca: busca.o avl-tree.o
+	gcc -o busca busca.o avl-tree.o
 
-myavl.o: myavl.c lib_avl.h
-	gcc -c myavl.c $(CFLAGS)
-
-lib_avl.o: lib_avl.c lib_avl.h
-	gcc -c lib_avl.c $(CFLAGS)
-
-teste: teste_avl.o lib_avl.o
-	gcc -o teste_avl teste_avl.o lib_avl.o
-
-teste_avl.o: teste_avl.c lib_avl.h
-	gcc -c teste_avl.c $(CFLAGS)
+busca.o: busca.c avl-tree.h
+	gcc -c busca.c $(CFLAGS)
 
 clean:
-	rm -f *.o
+	rm -f *.o 
 
 purge:
-	rm -f *.o myavl teste_avl
+	rm -f *.o busca avl-tree
