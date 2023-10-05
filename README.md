@@ -72,3 +72,6 @@ uma árvore. Caso esteja, o remove.
 
 - `void imprimeArvore(arvore *avl);` 
   - Imprime recursivamente a estrutura de uma árvore.
+ 
+- `void destroiArvore(arvore *avl);`
+  - Libera a memória alocada para uma árvore.
