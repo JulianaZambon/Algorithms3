@@ -4,7 +4,7 @@
 
 int main() {
     // Cria uma árvore AVL vazia
-    Arvore *arvore = inicializaArvore();
+    arvore *arvore = inicializaArvore();
 
     char comando; // i, b ou r
     int chave;
@@ -14,18 +14,18 @@ int main() {
 
         if (comando == 'i') {
             // Insere o nó na árvore
-            Nodo *novo = inicializaNodo(chave);
+            nodo *novo = inicializaNodo(chave);
             arvore = insereNodo(arvore, novo);
         } else if (comando == 'r') {
             // Remove o nó da árvore
             arvore = removeNodo(arvore, chave);
         } else if (comando == 'b') {
             // Realiza a busca na árvore
-            Nodo *nodoEncontrado = buscaNodo(arvore, chave);
+            nodo *nodoEncontrado = buscaNodo(arvore, chave);
 
             // Imprime os nós consultados na busca, se encontrado
             if (nodoEncontrado) {
-                Nodo *nodoAtual = arvore;
+                nodo *nodoAtual = arvore;
                 while (nodoAtual) {
                     printf("%d", nodoAtual->chave);
                     nodoAtual = nodoAtual->pai;
