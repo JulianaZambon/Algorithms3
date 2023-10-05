@@ -6,8 +6,8 @@ int main() {
     // Cria uma árvore AVL vazia
     arvore *arvore = inicializaArvore();
 
-    char comando;
-    int chave;
+    char comando; // i, r ou b
+    int chave; // valor do nodo
 
     while (scanf(" %c %d", &comando, &chave) == 2) {
         printf("%c %d\n", comando, chave);
