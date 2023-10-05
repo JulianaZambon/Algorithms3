@@ -6,7 +6,7 @@ int main() {
     // Cria uma árvore AVL vazia
     arvore *arvore = inicializaArvore();
 
-    char comando; // i, b ou r
+    char comando;
     int chave;
 
     while (scanf(" %c %d", &comando, &chave) == 2) {
@@ -25,7 +25,7 @@ int main() {
 
             // Imprime os nós consultados na busca, se encontrado
             if (nodoEncontrado) {
-                nodo *nodoAtual = arvore;
+                nodo *nodoAtual = nodoEncontrado;
                 while (nodoAtual) {
                     printf("%d", nodoAtual->chave);
                     nodoAtual = nodoAtual->pai;
