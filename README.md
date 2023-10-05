@@ -25,7 +25,7 @@ typedef struct arvore {
 #### Struct Nodos da Árvore
   
   Contém três ponteiros para nós, sendo eles o pai, o filho esquerdo e o filho direito. Além de
-uma chave de busca e a altura.
+uma chave e a altura.
   
 ```c
 typedef struct nodo {
