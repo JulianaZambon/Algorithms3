@@ -1,17 +1,24 @@
-CFLAGS = -Wall -std=c99 -g
-LDFLAGS =
-CC = gcc
+CFLAGS = -Wall -Wextra -g
 
-# arquivos-objeto
-objects = busca.o 
+all: myavl
 
-all: busca
+myavl: myavl.o lib_avl.o
+	gcc -o myavl myavl.o lib_avl.o
 
-busca: $(objects)
-	$(CC) -o busca $(objects) $(LDFLAGS)
+myavl.o: myavl.c lib_avl.h
+	gcc -c myavl.c $(CFLAGS)
 
-busca.o: busca.c
-	$(CC) -c $(CFLAGS) busca.c
+lib_avl.o: lib_avl.c lib_avl.h
+	gcc -c lib_avl.c $(CFLAGS)
+
+teste: teste_avl.o lib_avl.o
+	gcc -o teste_avl teste_avl.o lib_avl.o
+
+teste_avl.o: teste_avl.c lib_avl.h
+	gcc -c teste_avl.c $(CFLAGS)
 
 clean:
-	rm -f $(objects) busca
+	rm -f *.o
+
+purge:
+	rm -f *.o myavl teste_avl
