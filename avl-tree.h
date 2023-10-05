@@ -45,3 +45,6 @@ arvore *removeNodo(arvore *avl, int chave);
 
 /*Imprime recursivamente a estrutura de uma árvore.*/
 void imprimeArvore(arvore *avl);
+
+/*Libera a memória alocada para uma árvore.*/
+void destroiArvore(arvore *avl);
