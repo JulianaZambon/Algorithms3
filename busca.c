@@ -2,20 +2,6 @@
 #include <stdlib.h>
 #include "avl-tree.h"
 
-// Função para imprimir a descrição da árvore no formato especificado
-void imprimeDescricaoArvore(Arvore *arvore) {
-    if (arvore == NULL) {
-        printf("()");
-        return;
-    }
-
-    printf("(%d,", arvore->chave);
-    imprimeDescricaoArvore(arvore->esquerda);
-    printf(",");
-    imprimeDescricaoArvore(arvore->direita);
-    printf(")");
-}
-
 int main() {
     // Cria uma árvore AVL vazia
     Arvore *arvore = inicializaArvore();
@@ -28,7 +14,8 @@ int main() {
 
         if (comando == 'i') {
             // Insere o nó na árvore
-            arvore = insereNodo(arvore, chave);
+            Nodo *novo = inicializaNodo(chave);
+            arvore = insereNodo(arvore, novo);
         } else if (comando == 'r') {
             // Remove o nó da árvore
             arvore = removeNodo(arvore, chave);
@@ -36,8 +23,8 @@ int main() {
             // Realiza a busca na árvore
             Nodo *nodoEncontrado = buscaNodo(arvore, chave);
 
+            // Imprime os nós consultados na busca, se encontrado
             if (nodoEncontrado) {
-                // Imprime os nós consultados na busca
                 Nodo *nodoAtual = arvore;
                 while (nodoAtual) {
                     printf("%d", nodoAtual->chave);
@@ -47,13 +34,15 @@ int main() {
                     }
                 }
                 printf("\n");
-            } else {
-                printf("Nodo não encontrado.\n");
             }
         }
 
-    // Libera a memória da árvore 
+        // Imprime a estrutura da árvore
+        imprimeArvore(arvore);
+        printf("\n");
+    }
+
+    // Libera a memória da árvore
     destroiArvore(arvore);
     return 0;
 }
-
