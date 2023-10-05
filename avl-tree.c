@@ -120,3 +120,8 @@ arvore *removeNodo(arvore *avl, int chave) {
 void imprimeArvore(arvore *avl) {
     
 }
+
+/*Libera a memória alocada para uma árvore.*/
+void destroiArvore(arvore *avl) {
+    free(avl);
+}
