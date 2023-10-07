@@ -46,6 +46,9 @@ Também estão definidas as seguintes funções:
    
 - `nodo *inicializaNodo(int valor);`
   - Inicializa um nodo vazio.
+
+- `int calculaMaximo(int a, int b);`
+  - Calcula o máximo de dois números.
   
 - `void verificaBalancoArvore(arvore *avl);` 
   - Verifica se a árvore está balanceada e chama a função rotacionaArvore
