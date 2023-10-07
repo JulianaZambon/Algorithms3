@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct arvore {
-    nodo *raiz;
-    int numNodos;
-} arvore;
-
-typedef struct nodo {
+typedef struct nodoArvore {
     int chave;
     int altura;
     nodo *pai;
@@ -14,23 +9,31 @@ typedef struct nodo {
     nodo *filhoDir;
 } nodo;
 
+typedef struct arvore {
+    nodo *raiz;
+    int numNodos;
+} arvore;
+
 /*Inicializa uma árvore vazia.*/
 arvore *inicializaArvore();
 
 /*Inicializa um nodo vazio.*/
 nodo *inicializaNodo(int valor);
 
+/*Calcula o máximo de dois números*/
+int calculaMaximo(int a, int b);
+
 /*Verifica se a árvore está balanceada e chama a função rotacionaArvore
 caso seja necessário rotacioná-la para balanço*/
-void verificaBalancoArvore(arvore *avl);
+int verificaBalancoArvore(arvore *avl, int chave);
 
 /*É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
 desbalanceada e precise de rotações à esquerda para ser balanceada*/  
-void rotacionaArvoreEsquerda(arvore *avl);
+nodo *rotacionaArvoreEsquerda(arvore *avl, nodo *aux);
 
 /*É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
 desbalanceada e precise de rotações à direita para ser balanceada*/  
-void rotacionaArvoreDireita(arvore *avl);
+nodo *rotacionaArvoreDireita(arvore *avl, nodo *aux);
 
 /*Verifica se um nodo está, ou não, presente na árvore. Caso 
 esteja, retorna 1, caso não esteja retorna 0*/
