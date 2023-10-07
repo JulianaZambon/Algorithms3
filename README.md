@@ -9,7 +9,7 @@ Equipe:
 - Millena Suiani Costa, GRR20221243 <br>
 
 ### Estruturas de Dados da Árvore AVL
-A implementação da árvore AVL utilizou as seguintes estruturas definidas na biblioteca avl-tree.h <br>
+A implementação da árvore AVL utilizou as seguintes estruturas definidas na biblioteca avl-tree.h :<br>
 
 #### Struct Árvore AVL
   
