@@ -199,90 +199,113 @@ arvore *insereNodo(arvore *avl, nodo *novo) {
 /*Verifica se um nodo está, ou não, presente em 
 uma árvore. Caso esteja, o remove.*/
 arvore *removeNodo(arvore *avl, int chave) {
-    
-    /*Caso a árvore seja vazia, retorna erro na remoção. Caso tenha um 
-    só elemento, remove-o e retorna uma árvore vazia de raiz nula.*/
-    if (avl->numNodos <= 0) {
-        perror("Árvore vazia, não foi possível realizar a remoção.\n");
-        return avl;
-    }
-    
-    nodo *raiz = avl->raiz;
-    nodo *pai = NULL;
-    int lado = 0; //raiz(0), esquerda(-1), direita(1)
-
-    /*Caso a árvore tenha mais de um elemento, verifica se o nodo a ser removido 
-    faz parte da árvore, é removido e substituído por seu sucessor imediato, 
-    caso não esteja, é retornada uma mensagem de erro*/
-    if (buscaNodo(avl->raiz, chave) != 0) {
         
-        //Encontra o nodo a ser removido e seu pai
-        while (raiz != NULL && raiz->chave != chave) {
-            pai = raiz;
-
-            if (chave < raiz->chave) {
-                raiz = raiz->filhoEsq;
-                lado = -1;
-
-            } else {
-                raiz = raiz->filhoDir;
-                lado = 1;
+        /*Se a árvore for vazia, retorna erro*/
+        if (avl->raiz == NULL) {
+            perror("Árvore vazia, não foi possível remover o nodo.\n");
+            return avl;
+        }
+    
+        /*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
+        nodo *atual = avl->raiz;
+        while (atual != NULL) {
+            
+            if (chave < atual->chave)
+                atual = atual->filhoEsq;
+            
+            else if (chave > atual->chave)
+                atual = atual->filhoDir;
+            
+            else
+                break;
+        }
+    
+        /*Se o nó não for encontrado, retorna erro*/
+        if (atual == NULL) {
+            perror("Nodo não encontrado, não foi possível realizar a remoção.\n");
+            return avl;
+        }
+    
+        /*Se o nó for encontrado, verifica se ele é uma folha, se for, 
+        o remove e atualiza as alturas dos nodos na árvore*/
+        if (atual->filhoEsq == NULL && atual->filhoDir == NULL) {
+            if (atual->pai == NULL) {
+                avl->raiz = NULL;
+                free(atual);
+                avl->numNodos--;
+                printf("O nodo de valor %d foi removido com sucesso!\n", chave);
+                return avl;
             }
-        }
     
-    } else {
-        perror("O nodo que você deseja remover não está na árvore, não foi possível realizar a remoção.\n");
-        return avl;
-    }
-    
-    nodo *substituto = NULL;
-
-    //Caso o nodo a ser removido tenha um ou nenhum filho
-    if (raiz->filhoEsq == NULL)
-        substituto = raiz->filhoDir;
-    
-    else if (raiz->filhoDir == NULL)
-        substituto = raiz->filhoEsq;
-    
-    else {
+            if (atual->pai->filhoEsq == atual)
+                atual->pai->filhoEsq = NULL;
+            
+            else
+                atual->pai->filhoDir = NULL;
+            
+            free(atual);
+            avl->numNodos--;
+            printf("O nodo de valor %d foi removido com sucesso!\n", chave);
         
-        //Caso tenha dois filhos, encontra o sucessor imediato
-        nodo *sucessor = raiz->filhoDir;
-        pai = raiz;
-
-        while (sucessor->filhoEsq != NULL) {
-            pai = sucessor;
-            sucessor = sucessor->filhoEsq;
-        }
-
-        if (pai != raiz) {
-            pai->filhoEsq = sucessor->filhoDir;
-            sucessor->filhoDir = raiz->filhoDir;
-        }
+        /*Se o nó não for uma folha, verifica se ele tem apenas um filho, 
+        se tiver, o remove e atualiza as alturas dos nodos na árvore*/
+        } else if (atual->filhoEsq == NULL || atual->filhoDir == NULL) {
+            nodo *filho = (atual->filhoEsq != NULL) ? atual->filhoEsq : atual->filhoDir;
+            if (atual->pai == NULL) {
+                avl->raiz = filho;
+                free(atual);
+                avl->numNodos--;
+                printf("O nodo de valor %d foi removido com sucesso!\n", chave);
+                return avl;
+            }
         
-        substituto = sucessor;
-    }
+            if (atual->pai->filhoEsq == atual)
+                atual->pai->filhoEsq = filho;
+            
+            else
+                atual->pai->filhoDir = filho;
 
-    //Caso o nodo a ser removido seja a raiz
-    if (lado == 0) 
-        avl->raiz = substituto;
+            filho->pai = atual->pai;
+            free(atual);
+            avl->numNodos--;
+            printf("O nodo de valor %d foi removido com sucesso!\n", chave);
+
+        /*Se o nó não for uma folha e tiver dois filhos, verifica se o
+        sucessor in-order do nó é seu filho direito, se for, o remove e
+        atualiza as alturas dos nodos na árvore*/
+        } else if (atual->filhoEsq != NULL && atual->filhoDir != NULL) {
+            nodo *sucessor = atual->filhoDir;
+            while (sucessor->filhoEsq != NULL)
+                sucessor = sucessor->filhoEsq;
+            
+            if (sucessor->pai == atual) {
+                sucessor->pai->filhoDir = sucessor->filhoDir;
+                if (sucessor->filhoDir != NULL)
+                    sucessor->filhoDir->pai = sucessor->pai;
+            
+            } else {
+                sucessor->pai->filhoEsq = sucessor->filhoDir;
+                if (sucessor->filhoDir != NULL)
+                    sucessor->filhoDir->pai = sucessor->pai;
+            }
+            
+            atual->chave = sucessor->chave;
+            free(sucessor);
+            avl->numNodos--;
+            printf("O nodo de valor %d foi removido com sucesso!\n", chave);
+        }
     
-    else if (lado == -1)
-        pai->filhoEsq = substituto;
-    
-    else
-        pai->filhoDir = substituto;
-    
-    /*Libera a memória do nodo eliminado, atualiza o número de nodos da 
-    árvore, a altura dos nodos e verifica o balanceamento da árvore*/
-    free(raiz);
-    avl->numNodos--;
-    if (avl->raiz != NULL) {
-        avl->raiz->altura = 1 + calculaMaximo(avl->raiz->filhoEsq->altura, avl->raiz->filhoDir->altura);
+        /*Atualiza as alturas dos nodos na árvore*/
+        atual = atual->pai;
+        while (atual != NULL) {
+            int alturaEsq = (atual->filhoEsq != NULL) ? atual->filhoEsq->altura : 0;
+            int alturaDir = (atual->filhoDir != NULL) ? atual->filhoDir->altura : 0;
+            atual->altura = 1 + calculaMaximo(alturaEsq, alturaDir);
+            atual = atual->pai;
+        }
         verificaBalancoArvore(avl->raiz);
-    }
 
-    return avl;
+        return avl;
 }
 
 /*Imprime recursivamente a estrutura de uma árvore.*/
