@@ -129,13 +129,12 @@ int buscaNodo(nodo *raiz, int chave) {
     
     /*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
     if (chave < raiz->chave)
-        buscaNodo(raiz->filhoEsq, chave);
+        return buscaNodo(raiz->filhoEsq, chave);
     
     else if (chave > raiz->chave)
-        buscaNodo(raiz->filhoDir, chave);
+        return buscaNodo(raiz->filhoDir, chave);
     
     return 1;
-
 }
 
 /*Insere um nodo específico na árvore*/
