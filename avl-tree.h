@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct nodoArvore {
+typedef struct nodo {
     int chave;
     int altura;
-    nodo *pai;
-    nodo *filhoEsq;
-    nodo *filhoDir;
+    struct nodo *pai;
+    struct nodo *filhoEsq;
+    struct nodo *filhoDir;
 } nodo;
 
 typedef struct arvore {
@@ -25,19 +25,19 @@ int calculaMaximo(int a, int b);
 
 /*Verifica se a árvore está balanceada e chama a função rotacionaArvore
 caso seja necessário rotacioná-la para balanço*/
-int verificaBalancoArvore(arvore *avl, int chave);
+nodo *verificaBalancoArvore(nodo *raiz);
 
 /*É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
 desbalanceada e precise de rotações à esquerda para ser balanceada*/  
-nodo *rotacionaArvoreEsquerda(arvore *avl, nodo *aux);
+nodo *rotacionaArvoreEsquerda(nodo *aux);
 
 /*É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
 desbalanceada e precise de rotações à direita para ser balanceada*/  
-nodo *rotacionaArvoreDireita(arvore *avl, nodo *aux);
+nodo *rotacionaArvoreDireita(nodo *aux);
 
 /*Verifica se um nodo está, ou não, presente na árvore. Caso 
 esteja, retorna 1, caso não esteja retorna 0*/
-int buscaNodo(arvore *avl, int chave);
+int buscaNodo(nodo *raiz, int chave);
 
 /*Insere um nodo específico na árvore*/
 arvore *insereNodo(arvore *avl, nodo *novo);
@@ -47,7 +47,7 @@ uma árvore. Caso esteja, o remove.*/
 arvore *removeNodo(arvore *avl, int chave);
 
 /*Imprime recursivamente a estrutura de uma árvore.*/
-void imprimeArvore(arvore *avl);
+void imprimeArvore(nodo *avl);
 
 /*Libera a memória alocada para uma árvore.*/
 void destroiArvore(arvore *avl);

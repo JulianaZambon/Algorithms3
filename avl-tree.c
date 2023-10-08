@@ -30,96 +30,111 @@ int calculaMaximo(int a, int b) {
 
 /*Verifica se a árvore está balanceada e chama a função rotacionaArvore
 caso seja necessário rotacioná-la para balanço*/
-int verificaBalancoArvore(arvore *avl, int chave) {
-    
-    //Se a árvore é vazia, já está equilibrada
-    if (avl->raiz == NULL)
-        return 1;
+nodo *verificaBalancoArvore(nodo *raiz) {
+    if (raiz == NULL)
+        return NULL;
 
-    int balanco = (avl->raiz->filhoEsq->altura) - (avl->raiz->filhoDir->altura);
+    int alturaEsq = (raiz->filhoEsq != NULL) ? raiz->filhoEsq->altura : 0;
+    int alturaDir = (raiz->filhoDir != NULL) ? raiz->filhoDir->altura : 0;
+    int balanco = alturaEsq - alturaDir;
 
-    //Se a árvore está desbalanceada, realiza rotações
-    if (balanco > 1 || balanco < -1) {
-
-        if (balanco > 1 && chave < avl->raiz->filhoEsq->chave)
-            avl->raiz = rotacaoDireita(avl, avl->raiz);
-
-        else if (balanco < -1 && chave > avl->raiz->filhoDir->chave)
-            avl->raiz = rotacaoEsquerda(avl, avl->raiz);
-
-        else if (balanco > 1 && chave > avl->raiz->filhoEsq->chave) {
-            avl->raiz->filhoEsq = rotacaoEsquerda(avl, avl->raiz->filhoEsq);
-            avl->raiz = rotacaoDireita(avl, avl->raiz);
-
-        } else if (balanco < -1 && chave < avl->raiz->filhoDir->chave) {
-            avl->raiz->filhoDir = rotacaoDireita(avl, avl->raiz->filhoDir);
-            avl->raiz = rotacaoEsquerda(avl, avl->raiz);
+    if (balanco > 1) {
+        if (raiz->chave > raiz->filhoEsq->chave)
+            return rotacionaArvoreDireita(raiz);
+        
+        else {
+            raiz->filhoEsq = rotacionaArvoreEsquerda(raiz->filhoEsq);
+            return rotacionaArvoreDireita(raiz);
         }
     }
 
-    //Verifica balanço das sub-árvores recursivamente
-    return verificaBalancoArvore(avl, avl->raiz->filhoEsq) && verificaBalancoArvore(avl, avl->raiz->filhoDir);
+    if (balanco < -1) {
+        if (raiz->chave < raiz->filhoDir->chave)
+            return rotacionaArvoreEsquerda(raiz);
+        
+        else {
+            raiz->filhoDir = rotacionaArvoreDireita(raiz->filhoDir);
+            return rotacionaArvoreEsquerda(raiz);
+        }
+    }
+
+    //Atualiza a altura do nó após a rotação
+    raiz->altura = 1 + calculaMaximo(alturaEsq, alturaDir);
+
+    //Verifica balanço das subárvores recursivamente
+    raiz->filhoEsq = verificaBalancoArvore(raiz->filhoEsq);
+    raiz->filhoDir = verificaBalancoArvore(raiz->filhoDir);
+
+    return raiz;
 }
 
 /*É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
 desbalanceada e precise de rotações à esquerda para ser balanceada*/  
-nodo *rotacionaArvoreEsquerda(arvore *avl, nodo *aux) {
+nodo *rotacionaArvoreEsquerda(nodo *aux) {
+    if (aux == NULL)
+        return NULL;
+    
     nodo *nodoEsq = aux->filhoEsq;
-    nodo *nodoDir = nodoEsq->filhoDir;
+    
+    //Se nodoEsq for nulo, não há rotação a ser feita
+    if (nodoEsq == NULL)
+        return aux;
+
 
     //Realiza a rotação
+    nodo *nodoDir = (nodoEsq->filhoDir != NULL) ? nodoEsq->filhoDir : NULL;    
     nodoEsq->filhoDir = aux;
     aux->filhoEsq = nodoDir;
 
     //Atualiza as alturas após a rotação
-    if (aux != NULL)
-        aux->altura = 1 + calculaMaximo(aux->filhoEsq, aux->filhoDir);
-
-    if (nodoEsq != NULL)
-        nodoEsq->altura = 1 + calculaMaximo(nodoEsq->filhoEsq, nodoEsq->filhoDir);
+    aux->altura = 1 + calculaMaximo((aux->filhoEsq != NULL) ? aux->filhoEsq->altura : 0, (aux->filhoDir != NULL) ? aux->filhoDir->altura : 0);
+    nodoEsq->altura = 1 + calculaMaximo((nodoEsq->filhoEsq != NULL) ? nodoEsq->filhoEsq->altura : 0, (nodoEsq->filhoDir != NULL) ? nodoEsq->filhoDir->altura : 0);
 
     return nodoEsq;
 }
 
 /*É chamada pela função verificaBalancoArvore caso a árvore AVL esteja 
 desbalanceada e precise de rotações à direita para ser balanceada*/  
-nodo *rotacionaArvoreDireita(arvore *avl, nodo *aux) {
+nodo *rotacionaArvoreDireita(nodo *aux) {
+    if (aux == NULL) 
+        return NULL;
+    
     nodo *nodoDir = aux->filhoDir;
-    nodo *nodoEsq = nodoDir->filhoEsq;
+
+    //Se nodoDir for nulo, não há rotação a ser feita
+    if (nodoDir == NULL) 
+        return aux;
 
     //Realiza a rotação
+    nodo *nodoEsq = (nodoDir->filhoEsq != NULL) ? nodoDir->filhoEsq : NULL;
     nodoDir->filhoEsq = aux;
     aux->filhoDir = nodoEsq;
 
     //Atualiza as alturas após a rotação
-    if (aux != NULL)
-        aux->altura = 1 + calculaMaximo(aux->filhoEsq, aux->filhoDir);
-    
-    if (nodoDir != NULL)
-        nodoDir->altura = 1 + calculaMaximo(nodoDir->filhoEsq, nodoDir->filhoDir);
-    
+    aux->altura = 1 + calculaMaximo((aux->filhoEsq != NULL) ? aux->filhoEsq->altura : 0, (aux->filhoDir != NULL) ? aux->filhoDir->altura : 0);
+    nodoDir->altura = 1 + calculaMaximo((nodoDir->filhoEsq != NULL) ? nodoDir->filhoEsq->altura : 0, (nodoDir->filhoDir != NULL) ? nodoDir->filhoDir->altura : 0);
+
     return nodoDir;
 }
 
 /*Verifica se um nodo está, ou não, presente na árvore. Caso 
 esteja, retorna 1, caso não esteja retorna 0*/
-int buscaNodo(arvore *avl, int chave) {
+int buscaNodo(nodo *raiz, int chave) {
     
     /*Se a árvore for vazia, retorna erro*/
-    if (avl->raiz->chave == NULL) {
-        perror("Árvore vazia, não foi possível encontrar o nodo\n");
+    if (raiz == NULL) {
+        perror("Árvore vazia, não foi possível encontrar o nodo.\n");
         return 0;
     }
     
     /*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
-    if (chave < avl->raiz->chave)
-        avl->raiz->filhoEsq = buscaNodo(avl->raiz->filhoEsq, chave);
+    if (chave < raiz->chave)
+        buscaNodo(raiz->filhoEsq, chave);
     
-    else if (chave > avl->raiz->chave)
-        avl->raiz->filhoDir = buscaNodo(avl->raiz->filhoDir, chave);
+    else if (chave > raiz->chave)
+        buscaNodo(raiz->filhoDir, chave);
     
-    else
-        return 1;
+    return 1;
 
 }
 
@@ -127,7 +142,7 @@ int buscaNodo(arvore *avl, int chave) {
 arvore *insereNodo(arvore *avl, nodo *novo) {
 
     /*Se a árvore for vazia, sua raiz vai receber o nodo a ser inserido*/
-    if (avl->raiz->chave == NULL) {
+    if (avl->raiz == NULL) {
         avl->raiz = novo;
         avl->numNodos++;
         printf("O nodo de valor %d foi inserido com sucesso!\n", novo->chave);
@@ -138,21 +153,47 @@ arvore *insereNodo(arvore *avl, nodo *novo) {
     colocar o nó. Após o nó ser inserido, verifica se a árvore precisa 
     de alteração para cumprir os critérios de uma AVL, se sim, faz as 
     rotações necessárias*/
-    if (novo->chave < avl->raiz->chave)
-        avl->raiz->filhoEsq = insereNodo(avl->raiz->filhoEsq, novo);
-    
-    else if (novo->chave > avl->raiz->chave)
-        avl->raiz->filhoDir = insereNodo(avl->raiz->filhoDir, novo);
-    
-    else
-        perror("O nodo que você deseja novo já está na árvore, não foi possível realizar a inserção.\n");
-    
-    //Atualiza a altura da raiz
-    if (avl->raiz->altura != NULL)
-        avl->raiz->altura = 1 + calculaMaximo(avl->raiz->filhoEsq, avl->raiz->filhoDir);
+    nodo *atual = avl->raiz;
+    while (atual != NULL) {    
+        
+        if (novo->chave < atual->chave) {
+            if (atual->filhoEsq == NULL) {
+                atual->filhoEsq = novo;
+                novo->pai = atual;
+                avl->numNodos++;
+                printf("O nodo de valor %d foi inserido com sucesso!\n", novo->chave);
+                break;
+            
+            } else
+                atual = atual->filhoEsq;
+        
+        } else if (novo->chave > atual->chave) {
+            if (atual->filhoDir == NULL) {
+                atual->filhoDir = novo;
+                novo->pai = atual;
+                avl->numNodos++;
+                printf("O nodo de valor %d foi inserido com sucesso!\n", novo->chave);
+                break;
+            
+            } else
+                atual = atual->filhoDir; 
+        
+        } else {
+            printf("O nodo que você deseja novo já está na árvore, não foi possível realizar a inserção.\n");
+            break;
+        }
+    }
 
+    //Atualiza as alturas dos nodos na árvore
+    atual = novo->pai;
+    while (atual != NULL) {
+        int alturaEsq = (atual->filhoEsq != NULL) ? atual->filhoEsq->altura : 0;
+        int alturaDir = (atual->filhoDir != NULL) ? atual->filhoDir->altura : 0;
+        atual->altura = 1 + calculaMaximo(alturaEsq, alturaDir);
+        atual = atual->pai;
+    }
+    verificaBalancoArvore(avl->raiz);
 
-    verificaBalancoArvore(avl, novo->chave);
     return avl;
 }
 
@@ -169,13 +210,12 @@ arvore *removeNodo(arvore *avl, int chave) {
     
     nodo *raiz = avl->raiz;
     nodo *pai = NULL;
-    nodo *nodoRemovido = NULL;
     int lado = 0; //raiz(0), esquerda(-1), direita(1)
 
     /*Caso a árvore tenha mais de um elemento, verifica se o nodo a ser removido 
     faz parte da árvore, é removido e substituído por seu sucessor imediato, 
     caso não esteja, é retornada uma mensagem de erro*/
-    if (buscaNodo(avl, chave) != 0) {
+    if (buscaNodo(avl->raiz, chave) != 0) {
         
         //Encontra o nodo a ser removido e seu pai
         while (raiz != NULL && raiz->chave != chave) {
@@ -240,20 +280,20 @@ arvore *removeNodo(arvore *avl, int chave) {
     avl->numNodos--;
     if (avl->raiz != NULL) {
         avl->raiz->altura = 1 + calculaMaximo(avl->raiz->filhoEsq->altura, avl->raiz->filhoDir->altura);
-        verificaBalancoArvore(avl, chave);
+        verificaBalancoArvore(avl->raiz);
     }
 
     return avl;
 }
 
 /*Imprime recursivamente a estrutura de uma árvore.*/
-void imprimeArvore(arvore *avl) {
+void imprimeArvore(nodo *avl) {
 
-    if (avl->raiz->chave != NULL) {
-        printf("(%d,", avl->raiz->chave);
-        imprimeArvore(avl->raiz->filhoEsq);
+    if (avl != NULL) {
+        printf("(%d,", avl->chave);
+        imprimeArvore(avl->filhoEsq);
         printf(",");
-        imprimeArvore(avl->raiz->filhoDir);
+        imprimeArvore(avl->filhoDir);
         printf(")");
     
     } else
