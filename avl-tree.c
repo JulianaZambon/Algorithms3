@@ -141,7 +141,6 @@ arvore *insereNodo(arvore *avl, nodo *novo) {
     if (avl->raiz == NULL) {
         avl->raiz = novo;
         avl->numNodos++;
-        printf("O nodo de valor %d foi inserido com sucesso!\n", novo->chave);
         return avl;
     }
 
@@ -157,7 +156,6 @@ arvore *insereNodo(arvore *avl, nodo *novo) {
                 atual->filhoEsq = novo;
                 novo->pai = atual;
                 avl->numNodos++;
-                printf("O nodo de valor %d foi inserido com sucesso!\n", novo->chave);
                 break;
             
             } else
@@ -168,14 +166,12 @@ arvore *insereNodo(arvore *avl, nodo *novo) {
                 atual->filhoDir = novo;
                 novo->pai = atual;
                 avl->numNodos++;
-                printf("O nodo de valor %d foi inserido com sucesso!\n", novo->chave);
                 break;
             
             } else
                 atual = atual->filhoDir; 
         
         } else {
-            printf("O nodo que você deseja novo já está na árvore, não foi possível realizar a inserção.\n");
             break;
         }
     }
@@ -199,7 +195,6 @@ arvore *removeNodo(arvore *avl, int chave) {
         
         /*Se a árvore for vazia, retorna erro*/
         if (avl->raiz == NULL) {
-            perror("Árvore vazia, não foi possível remover o nodo.\n");
             return avl;
         }
     
@@ -218,11 +213,9 @@ arvore *removeNodo(arvore *avl, int chave) {
         }
     
         /*Se o nó não for encontrado, retorna erro*/
-        if (atual == NULL) {
-            perror("Nodo não encontrado, não foi possível realizar a remoção.\n");
+        if (atual == NULL) 
             return avl;
-        }
-    
+        
         /*Se o nó for encontrado, verifica se ele é uma folha, se for, 
         o remove e atualiza as alturas dos nodos na árvore*/
         if (atual->filhoEsq == NULL && atual->filhoDir == NULL) {
@@ -230,7 +223,6 @@ arvore *removeNodo(arvore *avl, int chave) {
                 avl->raiz = NULL;
                 free(atual);
                 avl->numNodos--;
-                printf("O nodo de valor %d foi removido com sucesso!\n", chave);
                 return avl;
             }
     
@@ -242,7 +234,6 @@ arvore *removeNodo(arvore *avl, int chave) {
             
             free(atual);
             avl->numNodos--;
-            printf("O nodo de valor %d foi removido com sucesso!\n", chave);
         
         /*Se o nó não for uma folha, verifica se ele tem apenas um filho, 
         se tiver, o remove e atualiza as alturas dos nodos na árvore*/
@@ -252,7 +243,6 @@ arvore *removeNodo(arvore *avl, int chave) {
                 avl->raiz = filho;
                 free(atual);
                 avl->numNodos--;
-                printf("O nodo de valor %d foi removido com sucesso!\n", chave);
                 return avl;
             }
         
@@ -265,7 +255,6 @@ arvore *removeNodo(arvore *avl, int chave) {
             filho->pai = atual->pai;
             free(atual);
             avl->numNodos--;
-            printf("O nodo de valor %d foi removido com sucesso!\n", chave);
 
         /*Se o nó não for uma folha e tiver dois filhos, verifica se o
         sucessor in-order do nó é seu filho direito, se for, o remove e
@@ -289,7 +278,6 @@ arvore *removeNodo(arvore *avl, int chave) {
             atual->chave = sucessor->chave;
             free(sucessor);
             avl->numNodos--;
-            printf("O nodo de valor %d foi removido com sucesso!\n", chave);
         }
     
         /*Atualiza as alturas dos nodos na árvore*/
