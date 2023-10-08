@@ -119,22 +119,19 @@ nodo *rotacionaArvoreDireita(nodo *aux) {
 
 /*Verifica se um nodo está, ou não, presente na árvore. Caso 
 esteja, retorna 1, caso não esteja retorna 0*/
+/*Verifica se um nodo está, ou não, presente na árvore. Caso 
+esteja, retorna 1, caso não esteja retorna 0*/
 int buscaNodo(nodo *raiz, int chave) {
-    
-    /*Se a árvore for vazia, retorna erro*/
-    if (raiz == NULL) {
-        perror("Árvore vazia, não foi possível encontrar o nodo.\n");
+    if (raiz == NULL)
         return 0;
-    }
-    
-    /*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
-    if (chave < raiz->chave)
+/*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
+    if (raiz->chave == chave)
+        return 1;
+
+    if (raiz->chave > chave)
         return buscaNodo(raiz->filhoEsq, chave);
-    
-    else if (chave > raiz->chave)
-        return buscaNodo(raiz->filhoDir, chave);
-    
-    return 1;
+
+    return buscaNodo(raiz->filhoDir, chave);
 }
 
 /*Insere um nodo específico na árvore*/
