@@ -5,8 +5,8 @@ Este trabalho prático foi desenvolvido para a disciplina CI1057 - Algoritmos e 
 O objetivo é implementar as rotinas de manipulação de uma árvore AVL.
 
 Equipe: 
-- Juliana Zambon, GRR20224168 <br>
-- Millena Suiani Costa, GRR20221243 <br>
+- Juliana Zambon (jz22), GRR20224168 <br>
+- Millena Suiani Costa (msc22), GRR20221243 <br>
 
 ### Estruturas de Dados da Árvore AVL
 A implementação da árvore AVL utilizou as seguintes estruturas definidas na biblioteca avl-tree.h :<br>
