@@ -19,6 +19,7 @@ nodo *inicializaNodo(int valor)
     novo->altura = 1;
     novo->filhoEsq = NULL;
     novo->filhoDir = NULL;
+    novo->pai = NULL;
     return novo;
 }
 
