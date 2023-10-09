@@ -139,30 +139,30 @@ arvore *removeNodo(arvore *avl, int chave) {
         return avl;
 
     //Verifica a posição do nó a ser removido.
-    nodo *raiz = avl->raiz;
+    nodo *raizAux = avl->raiz;
     nodo *pai = NULL;
-    while (raiz != NULL && raiz->chave != chave) {
-        pai = raiz;
+    while (raizAux != NULL && raizAux->chave != chave) {
+        pai = raizAux;
 
-        if (chave < raiz->chave)
-            raiz = raiz->filhoEsq;
+        if (chave < raizAux->chave)
+            raizAux = raizAux->filhoEsq;
         else
-            raiz = raiz->filhoDir;
+            raizAux = raizAux->filhoDir;
     }
     
     //Se a árvore é vazia, a retorna.
-    if (raiz == NULL)
+    if (raizAux == NULL)
         return avl;
 
     //Remove o nó e atribui os valores necessários para cada ponteiro.
-    if (raiz->filhoEsq == NULL || raiz->filhoDir == NULL) {
-        nodo *filho = raiz->filhoEsq ? raiz->filhoEsq : raiz->filhoDir;
+    if (raizAux->filhoEsq == NULL || raizAux->filhoDir == NULL) {
+        nodo *filho = raizAux->filhoEsq ? raizAux->filhoEsq : raizAux->filhoDir;
 
         if (filho == NULL) {
             if (pai == NULL)
                 avl->raiz = NULL;
             else {
-                if (raiz == pai->filhoEsq)
+                if (raizAux == pai->filhoEsq)
                     pai->filhoEsq = NULL;
                 else
                     pai->filhoDir = NULL;
@@ -172,22 +172,22 @@ arvore *removeNodo(arvore *avl, int chave) {
                 avl->raiz = filho;
             
             else {
-                if (raiz == pai->filhoEsq)
+                if (raizAux == pai->filhoEsq)
                     pai->filhoEsq = filho;
                 else
                     pai->filhoDir = filho;
             }
             filho->pai = pai;
         }
-        free(raiz);
+        free(raizAux);
     
     } else {
-        nodo *sucessor = raiz->filhoDir;
+        nodo *sucessor = raizAux->filhoDir;
         
         while (sucessor->filhoEsq != NULL)
             sucessor = sucessor->filhoEsq;
 
-        raiz->chave = sucessor->chave;
+        raizAux->chave = sucessor->chave;
         avl = removeNodo(avl, sucessor->chave);
     }
 
