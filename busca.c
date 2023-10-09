@@ -2,37 +2,29 @@
 #include <stdlib.h>
 #include "avl-tree.h"
 
-int main() {
-    
-    //Cria uma árvore AVL vazia
+int main()
+{
+    // Cria uma árvore AVL vazia
     arvore *avl = inicializaArvore();
+    char comando; // i, r ou b
+    int chave;    // Chave do nó
 
-    char comando;
-    int chave;
-
-    while (scanf(" %c %d", &comando, &chave) == 2) {
-
+    // Lê os comandos e chaves
+    while (scanf(" %c %d", &comando, &chave) == 2)
+    {
+        // insere nó na árvore
         if (comando == 'i') {
-            //Insere nó na árvore
             nodo *novo = inicializaNodo(chave);
             avl = insereNodo(avl, novo);
 
+            // remove nó da árvore
         } else if (comando == 'r') {
-            //Remove nó da árvore
             avl = removeNodo(avl, chave);
 
+            // busca nó na árvore
         } else if (comando == 'b') {
-            
-            //Se árvore é vazia, indica erro
             if (avl->raiz != NULL) {
-            
-                //Se nó não está na árvore, indica erro
-                if (buscaNodo(avl->raiz, chave) == 0)
-                    fprintf(stderr, "Nó não encontrado.\n");
-
-                //Imprime os nós consultados na busca
                 nodo *nodoEncontrado = avl->raiz;
-                printf("\n");
                 printf("%d", nodoEncontrado->chave);
 
                 while (nodoEncontrado != NULL && nodoEncontrado->chave != chave) {
@@ -45,17 +37,13 @@ int main() {
                     if (nodoEncontrado != NULL)
                         printf(",%d", nodoEncontrado->chave);
                 }
-                printf("\n"); 
-
-            } else
-                fprintf(stderr, "Nó não encontrado: Árvore vazia.\n");
+                printf("\n");
+            }
         }
-
         imprimeArvore(avl->raiz);
-        printf("\n\n");
+        printf("\n");
     }
-
-    //Libera a memória da árvore
+    // Libera a memória da árvore
     destroiArvore(avl);
     return 0;
 }
