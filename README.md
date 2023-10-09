@@ -78,5 +78,3 @@ uma árvore. Caso esteja, o remove.
  
 - `void destroiArvore(arvore *avl);`
   - Libera a memória alocada para uma árvore.
- 
-### Testando a Árvore AVL: Casos de Teste e Resultados
