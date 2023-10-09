@@ -119,12 +119,11 @@ nodo *rotacionaArvoreDireita(nodo *aux) {
 
 /*Verifica se um nodo está, ou não, presente na árvore. Caso 
 esteja, retorna 1, caso não esteja retorna 0*/
-/*Verifica se um nodo está, ou não, presente na árvore. Caso 
-esteja, retorna 1, caso não esteja retorna 0*/
 int buscaNodo(nodo *raiz, int chave) {
     if (raiz == NULL)
         return 0;
-/*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
+   
+    /*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
     if (raiz->chave == chave)
         return 1;
 
@@ -171,9 +170,8 @@ arvore *insereNodo(arvore *avl, nodo *novo) {
             } else
                 atual = atual->filhoDir; 
         
-        } else {
+        } else
             break;
-        }
     }
 
     //Atualiza as alturas dos nodos na árvore
@@ -193,12 +191,12 @@ arvore *insereNodo(arvore *avl, nodo *novo) {
 uma árvore. Caso esteja, o remove.*/
 arvore *removeNodo(arvore *avl, int chave) {
         
-        /*Se a árvore for vazia, retorna erro*/
-        if (avl->raiz == NULL) {
+        //Se a árvore for vazia, retorna erro
+        if (avl->raiz == NULL)
             return avl;
-        }
     
-        /*Se a árvore não for vazia, verifica se o nó em questão é encontrado*/
+        /*Se a árvore não for vazia, verifica 
+        se o nó em questão é encontrado*/
         nodo *atual = avl->raiz;
         while (atual != NULL) {
             
@@ -213,9 +211,11 @@ arvore *removeNodo(arvore *avl, int chave) {
         }
     
         /*Se o nó não for encontrado, retorna erro*/
-        if (atual == NULL) 
+        if (atual == NULL) {
+            free(atual);
             return avl;
-        
+        }        
+
         /*Se o nó for encontrado, verifica se ele é uma folha, se for, 
         o remove e atualiza as alturas dos nodos na árvore*/
         if (atual->filhoEsq == NULL && atual->filhoDir == NULL) {
@@ -232,7 +232,6 @@ arvore *removeNodo(arvore *avl, int chave) {
             else
                 atual->pai->filhoDir = NULL;
             
-            free(atual);
             avl->numNodos--;
         
         /*Se o nó não for uma folha, verifica se ele tem apenas um filho, 
@@ -253,14 +252,15 @@ arvore *removeNodo(arvore *avl, int chave) {
                 atual->pai->filhoDir = filho;
 
             filho->pai = atual->pai;
-            free(atual);
             avl->numNodos--;
+            free(filho);
 
         /*Se o nó não for uma folha e tiver dois filhos, verifica se o
-        sucessor in-order do nó é seu filho direito, se for, o remove e
+        sucessor direto do nó é seu filho direito, se for, o remove e
         atualiza as alturas dos nodos na árvore*/
         } else if (atual->filhoEsq != NULL && atual->filhoDir != NULL) {
             nodo *sucessor = atual->filhoDir;
+            
             while (sucessor->filhoEsq != NULL)
                 sucessor = sucessor->filhoEsq;
             
@@ -289,7 +289,7 @@ arvore *removeNodo(arvore *avl, int chave) {
             atual = atual->pai;
         }
         verificaBalancoArvore(avl->raiz);
-
+        free(atual);
         return avl;
 }
 
@@ -310,7 +310,7 @@ void imprimeArvore(nodo *avl) {
 /*Libera a memória alocada para uma árvore.*/
 void destroiArvore(arvore *avl) {
         
-    if (avl->numNodos > 0) {
+    if (avl->raiz != NULL) {
         avl = removeNodo(avl, avl->raiz->chave);
         destroiArvore(avl);
     
