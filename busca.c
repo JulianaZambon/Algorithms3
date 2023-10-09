@@ -11,9 +11,9 @@ int main()
     char comando;
     int chave;
 
-    while (scanf(" %c %d", &comando, &chave) == 2)
+    while (scanf(" %c %d", &comando, &chave) != EOF)
     {
-
+        printf("%c %d\n", comando, chave);
         if (comando == 'i')
         {
             // Insere nó na árvore
@@ -36,10 +36,6 @@ int main()
             if (avl->raiz != NULL)
             {
 
-                // Se nó não está na árvore, indica erro
-                if (buscaNodo(avl->raiz, chave) == 0)
-                    fprintf(stderr, "Nó não encontrado.\n");
-
                 // Imprime os nós consultados na busca
                 nodo *nodoEncontrado = avl->raiz;
                 printf("%d", nodoEncontrado->chave);
@@ -57,8 +53,6 @@ int main()
                 }
                 printf("\n");
             }
-            else
-                fprintf(stderr, "Nó não encontrado: Árvore vazia.\n");
         }
     }
 
